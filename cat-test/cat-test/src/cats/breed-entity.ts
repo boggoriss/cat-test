@@ -14,12 +14,13 @@ export class Breed {
     @PrimaryGeneratedColumn()
     public breed_id: number;
 
-    @Column()
-
+    @Column({
+        unique: true
+    })
     public name_breed: string;
 
     @OneToMany( type => Cat,
-        cats => cats.breed,
+        cats => cats.breed
     )
     public cats: Cat[];
 

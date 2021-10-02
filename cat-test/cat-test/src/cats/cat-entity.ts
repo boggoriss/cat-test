@@ -3,11 +3,12 @@ import {
     Column,
     CreateDateColumn,
     Entity, JoinColumn,
-    ManyToOne, PrimaryColumn,
+    ManyToOne, OneToOne, PrimaryColumn,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
 import {Breed} from "./breed-entity";
+import {ImageEntity} from "../images/image.entity";
 
 @Entity()
 export class Cat {
@@ -18,7 +19,8 @@ export class Cat {
     public name_cat: string;
 
     @ManyToOne(type => Breed,
-        breed => breed.cats
+        breed => breed.cats,
+        {eager: true, onUpdate: "CASCADE", onDelete: "CASCADE"}
     )
     @JoinColumn({
          name: 'breed_id'
@@ -33,15 +35,22 @@ export class Cat {
     })
     public price: number;
 
-    @Column({
-        default: null
+    @OneToOne(
+        () => ImageEntity,
+        {
+            eager: true,
+            nullable: true
+        }
+    )
+    @JoinColumn({
+        name: "photo"
     })
-    public url: string;
+    public image?: ImageEntity;
 
     @Column({
         default: false
     })
-    public is_adopted: boolean;
+    public is_booked: boolean;
 
     @CreateDateColumn()
     public created_at: Date;

@@ -8,6 +8,7 @@ import { CatsService } from './cats/cats.service';
 import { CatsModule } from './cats/cats.module';
 import {Cat} from "./cats/cat-entity";
 import {Breed} from "./cats/breed-entity";
+import {ImageEntity} from "./images/image.entity";
 
 
 @Module({
@@ -24,7 +25,7 @@ import {Breed} from "./cats/breed-entity";
                         username: process.env.POSTGRES_USER,
                         password: process.env.POSTGRES_PASSWORD,
                         database: process.env.POSTGRES_DB,
-                        entities: [Cat, Breed],
+                        entities: [Cat, Breed, ImageEntity],
                         synchronize: true,
                         autoLoadEntities: true
                 }),
